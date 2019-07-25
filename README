@@ -1,0 +1,9 @@
+To run the app, run python3 gui.py in the command line. Fill out the form as given.
+After clicking the "Look for licenses" button, all public and private repositories will
+be displayed, followed by the license they publish. If repository does not have a license,
+a button labeled "Add license" will be displayed on the side. 
+
+The add license button will:
+    Create a new branch called "LicenseBranch," on the Github repository.
+    Add a file with the MIT license, including the organization name.
+    Make a pull request with LicenseBranch as the head and master as the base.
