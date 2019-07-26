@@ -1,14 +1,14 @@
 import tkinter as gui
 from tkinter import Label, Button, Entry, messagebox
-
-
 import Connection
-
-main = gui.Tk()
-main.title("GitHub License Adder")
 
 
 def get_repositories():
+    """Controls "Look for licenses" button; checks for valid credentials, and creates second window
+       that matches licenses with repos. If no license is found for a repository, a button to add a license
+       will display.
+    """
+    
     username = userEntry.get()
     organization = orgEntry.get()
     password = passEntry.get()
@@ -27,7 +27,7 @@ def get_repositories():
     repo_licenses = connection.get_repos(organization)
 
     if repo_licenses is None:
-        messagebox.showerror("Invalid credentials.")
+        messagebox.showerror("Invalid credentials.", "Please enter valid credentials.")
     else:
         repo_win = gui.Tk()
         repo_win.title("Repositories")
@@ -45,12 +45,29 @@ def get_repositories():
 
 
 def get_licenses(connection, organization, repo_name, add_button):
+    """Controls "add license" button. Attempts to add license, and shows message explaining result of 
+    attempt.
+    Parameters
+    -----------
+        connections : Connection
+            Connection object that contains authorization for current user
+        organization : str
+            Name of organization that was searched
+        repo_name : str
+            Name of repo to which license is being added
+        add_button : Button
+            Button object that was used to request license
+    """
+    
     if connection.get_license(organization, repo_name):
         messagebox.showinfo("Success", "A new branch with an MIT license was created, and a pull request was sent.")
         add_button["state"] = "disabled"
     else:
         messagebox.showinfo("Oops", "Request not completed. Have you already sent a pull request?")
 
+
+main = gui.Tk()
+main.title("GitHub License Adder")
 
 Label(main, text="Username").pack(padx=40, pady=2)
 userEntry = Entry(main)
