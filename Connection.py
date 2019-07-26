@@ -13,7 +13,11 @@ class Connection:
     ----------
         auth_header : dictionary
             Contains information necessary for "Authorization" http header
-    
+        HTTP_OKAY : int
+            HTTP status code for succesful get request
+        HTTP_CREATED : int
+            HTTP status code for succesful post or put request
+            
     Methods
     ---------
     get_repos(organization)
@@ -21,10 +25,11 @@ class Connection:
     get_license(organization, repo_name)
         Adds MIT license to repository in a new branch, and makes pull request on the new branch.       
     """
+    
     auth_header = {}
-
     HTTP_OKAY = 200
     HTTP_CREATED = 201
+    
     def __init__(self, username, password):
         """
         Parameters
