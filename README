@@ -1,9 +1,27 @@
-To run the app, run python3 gui.py in the command line. Fill out the form as given.
+To run the app, open the command line from the main folder and run python3 gui.py. 
+Fill out the form as given:
+    Username -- Github username of the owner of the organization/user with access to organization
+    Organization -- Name of the organization to be searched
+    Password -- Password associated with the username given in the first line
+    
 After clicking the "Look for licenses" button, all public and private repositories will
-be displayed, followed by the license they publish. If repository does not have a license,
+be displayed, followed by the license the repository publishes. If a repository does not have a license,
 a button labeled "Add license" will be displayed on the side. 
 
 The add license button will:
     Create a new branch called "LicenseBranch," on the Github repository.
-    Add a file with the MIT license, including the organization name.
-    Make a pull request with LicenseBranch as the head and master as the base.
+    Add the MIT open source license, with the organization name, to the new branch.
+    Open a pull request to merge LicenseBranch with the master branch.
+
+The program requires the python package "requests," which may be installed with pip:
+    pip install requests
+
+I originally considered making two separate options for searching through Github organizations:
+Searching only public repos for licenses, and searching both public and private repos. This option was removed 
+later, as it did not seem to fit well with the second part (where licenses are added to repos), which always
+requires a password. The program, then, assumes that the indivual making the search owns or has direct access to
+the organization attatched to the search. The functionality also assumes that organizations are the only account types that
+will be searched -- private accounts cannot be searched.
+
+
+
