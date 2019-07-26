@@ -1,6 +1,7 @@
 import tkinter as gui
 from tkinter import Label, Button, Entry, messagebox
 import Connection
+from functools import partial
 
 
 def get_repositories():
@@ -8,7 +9,7 @@ def get_repositories():
        that matches licenses with repos. If no license is found for a repository, a button to add a license
        will display.
     """
-    
+
     username = userEntry.get()
     organization = orgEntry.get()
     password = passEntry.get()
@@ -36,7 +37,7 @@ def get_repositories():
             Label(repo_win, text=key, justify=gui.LEFT).grid(padx=10, pady=7, row=row, column=0)
             if repo_licenses[key] == "No License":
                 add_button = Button(repo_win, text="Add license",
-                                    command=lambda: get_licenses(connection, organization, key, add_button),
+                                    command=partial(get_licenses,connection, organization, key),
                                     bg="#b3b8ba")
                 add_button.grid(padx=10, pady=7, row=row, column=1)
             else:
@@ -44,8 +45,8 @@ def get_repositories():
             row = row + 1
 
 
-def get_licenses(connection, organization, repo_name, add_button):
-    """Controls "add license" button. Attempts to add license, and shows message explaining result of 
+def get_licenses(connection, organization, repo_name):
+    """Controls "add license" button. Attempts to add license, and shows message explaining result of
     attempt.
     Parameters
     -----------
@@ -61,7 +62,6 @@ def get_licenses(connection, organization, repo_name, add_button):
     
     if connection.get_license(organization, repo_name):
         messagebox.showinfo("Success", "A new branch with an MIT license was created, and a pull request was sent.")
-        add_button["state"] = "disabled"
     else:
         messagebox.showinfo("Oops", "Request not completed. Have you already sent a pull request?")
 
@@ -83,4 +83,3 @@ passEntry.pack(padx=40, pady=2)
 
 Button(main, text="Look for licenses", bg="#b3b8ba", command=get_repositories).pack(padx=40, pady=10)
 main.mainloop()
-
