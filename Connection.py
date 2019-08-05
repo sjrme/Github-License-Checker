@@ -6,7 +6,7 @@ import Strings
 
 class Connection:
     """
-    Makes all connections to Github and returns necessary infomration from connections to match
+    Makes all connections to Github and returns necessary information from connections to match
     repos to license, and to add licenses to repos that do not have one. 
     
     Attributes
